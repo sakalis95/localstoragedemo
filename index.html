@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <input id="input" type="text" />
+        <button onclick="addItem(); clearInput()">Click me</button>
+        <ul id="ul"></ul>
+    </body>
+    <script>
+        let items = [];
+        let addItem = () => {
+            let item = document.getElementById("input");
+            items.push(item.value);
+            localStorage.setItem("items", JSON.stringify(items));
+            const ul = document.getElementById("ul");
+            const newLi = document.createElement("li");
+            newLi.appendChild(document.createTextNode(item.value));
+            ul.appendChild(newLi);
+        };
+        let clearInput = () => {
+            document.getElementById("input").value = "";
+        };
+        let displayItems = () => {
+            let itemsFromStorage = JSON.parse(localStorage.getItem("items"));
+            const ul = document.getElementById("ul");
+            for (let i = 0; i < itemsFromStorage.length; i++) {
+                const newLi = document.createElement("li");
+                newLi.appendChild(document.createTextNode(itemsFromStorage[i]));
+                ul.appendChild(newLi);
+            }
+            items = itemsFromStorage;
+        };
+        displayItems();
+    </script>
+</html>
